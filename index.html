@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Billionaire Buddies • 6,666 Elite NFTs</title>
+  <meta name="description" content="Billionaire Buddies is a high-fidelity PFP collection of 6,666 unique characters on Ethereum. Join the elite circle of digital innovators.">
+  <meta property="og:title" content="Billionaire Buddies • 6,666 Elite NFTs">
+  <meta property="og:description" content="Premium 2D character art merging ambition, style, and blockchain.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@BBuddiesClub">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='4' fill='%230a0a0a'/><text x='2' y='12' font-size='11' fill='%23D4AF37'>B</text></svg>">
+
+  <!-- Google Fonts: Premium look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-deep: #030303;
+      --bg-primary: #0a0a0a;
+      --bg-card: rgba(255, 215, 0, 0.03);
+      --bg-card-hover: rgba(212, 175, 55, 0.08);
+      --gold: #D4AF37;
+      --gold-light: #F0C75E;
+      --gold-glow: rgba(212, 175, 55, 0.35);
+      --text-primary: #F5F0E6;
+      --text-dim: #A39B8B;
+      --text-muted: #6B6357;
+      --border-subtle: rgba(212, 175, 55, 0.18);
+      --border-strong: rgba(212, 175, 55, 0.4);
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --glass-bg: rgba(10, 10, 10, 0.75);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #020202; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* NAVIGATION */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 2.5rem;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .navbar.scrolled {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 3px;
+      text-shadow: 0 0 18px var(--gold-glow);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-socials {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .nav-socials a {
+      color: var(--text-dim);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+    }
+    .nav-socials a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+      transform: translateY(-2px);
+    }
+    .nav-socials svg { width: 17px; height: 17px; }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0; right: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1.5rem 2rem;
+      z-index: 999;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 900px; height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+      animation: heroGlow 10s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes heroGlow {
+      0% { transform: scale(1) translate(0,0); }
+      100% { transform: scale(1.15) translate(40px, -30px); }
+    }
+    .hero-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.4rem 1.2rem;
+      border-radius: 100px;
+      border: 1px solid var(--border-strong);
+      background: rgba(212,175,55,0.06);
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .hero-badge .dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--gold-glow); }
+      50% { opacity: 0.6; box-shadow: 0 0 0 10px transparent; }
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.6rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, #E2C044 0%, #D4AF37 40%, #F8E498 70%, #D4AF37 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShift 7s ease-in-out infinite;
+      letter-spacing: 2px;
+    }
+    @keyframes goldShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.8;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      letter-spacing: 1px;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #D4AF37, #B49428);
+      color: #0a0a0a;
+      box-shadow: 0 6px 25px var(--gold-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(212,175,55,0.5);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.06);
+      transform: translateY(-3px);
+    }
+
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 480px;
+    }
+    .hero-card-stack {
+      position: relative;
+      width: 320px; height: 380px;
+    }
+    .hero-card {
+      position: absolute;
+      width: 230px; height: 280px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #111;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .hero-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9) contrast(1.05);
+    }
+    .hero-card:nth-child(1) { top: 30px; left: 0; transform: rotate(-10deg); animation: floatCard1 6s ease-in-out infinite; }
+    .hero-card:nth-child(2) { top: 0; left: 85px; transform: rotate(0deg); animation: floatCard2 7s ease-in-out infinite; z-index: 3; width: 250px; height: 300px; border-color: var(--gold); box-shadow: 0 30px 70px rgba(212,175,55,0.2); }
+    .hero-card:nth-child(3) { top: 50px; right: -15px; left: auto; transform: rotate(8deg); animation: floatCard3 8s ease-in-out infinite; }
+    @keyframes floatCard1 {
+      0%,100% { transform: rotate(-10deg) translateY(0); }
+      50% { transform: rotate(-8deg) translateY(-14px); }
+    }
+    @keyframes floatCard2 {
+      0%,100% { transform: rotate(0deg) translateY(0); }
+      50% { transform: rotate(2deg) translateY(-18px); }
+    }
+    @keyframes floatCard3 {
+      0%,100% { transform: rotate(8deg) translateY(0); }
+      50% { transform: rotate(6deg) translateY(-10px); }
+    }
+
+    /* STATS */
+    .stats-section {
+      position: relative; z-index: 1;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
+    }
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .stat-item { text-align: center; padding: 1.5rem; }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 20px var(--gold-glow);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* SECTIONS */
+    .section { position: relative; z-index: 1; padding: 6rem 2rem; }
+    .section-container { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-tag {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+    .section-desc {
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-image-wrapper {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      transition: all 0.4s ease;
+    }
+    .about-image-wrapper:hover {
+      border-color: var(--gold);
+      box-shadow: 0 25px 60px rgba(212,175,55,0.2);
+      transform: translateY(-6px);
+    }
+    .about-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .about-image-wrapper:hover img {
+      transform: scale(1.03);
+    }
+
+    /* ========== GALLERY SECTION - FULLY ANIMATED (15 NFT) ========== */
+    .gallery-section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 0 4rem;
+      overflow: hidden;
+    }
+    .marquee-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+      will-change: transform;
+    }
+    .marquee-track.top {
+      animation: marqueeScrollLeft 60s linear infinite;
+    }
+    .marquee-track.bottom {
+      animation: marqueeScrollRight 60s linear infinite;
+    }
+    @keyframes marqueeScrollLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marqueeScrollRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    .marquee-item {
+      flex-shrink: 0;
+      width: 200px;
+      height: 240px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #0d0d0d;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      animation: cardFloat 5s ease-in-out infinite;
+    }
+    .marquee-item:nth-child(1) { animation-delay: 0s; }
+    .marquee-item:nth-child(2) { animation-delay: 0.3s; }
+    .marquee-item:nth-child(3) { animation-delay: 0.6s; }
+    .marquee-item:nth-child(4) { animation-delay: 0.9s; }
+    .marquee-item:nth-child(5) { animation-delay: 1.2s; }
+    .marquee-item:nth-child(6) { animation-delay: 1.5s; }
+    .marquee-item:nth-child(7) { animation-delay: 1.8s; }
+    .marquee-item:nth-child(8) { animation-delay: 2.1s; }
+    .marquee-item:nth-child(9) { animation-delay: 2.4s; }
+    .marquee-item:nth-child(10) { animation-delay: 2.7s; }
+    .marquee-item:nth-child(11) { animation-delay: 3.0s; }
+    .marquee-item:nth-child(12) { animation-delay: 3.3s; }
+    .marquee-item:nth-child(13) { animation-delay: 3.6s; }
+    .marquee-item:nth-child(14) { animation-delay: 3.9s; }
+    .marquee-item:nth-child(15) { animation-delay: 4.2s; }
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .marquee-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.15) 50%, rgba(212,175,55,0) 100%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-item:hover::before {
+      opacity: 1;
+    }
+    .marquee-item:hover {
+      transform: translateY(-14px) scale(1.07);
+      border-color: var(--gold);
+      box-shadow: 0 0 30px var(--gold-glow), 0 20px 40px rgba(0,0,0,0.8);
+      z-index: 5;
+      animation-play-state: paused;
+    }
+    .marquee-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, filter 0.4s ease;
+      filter: brightness(0.85) contrast(1.05);
+    }
+    .marquee-item:hover img {
+      transform: scale(1.08);
+      filter: brightness(1.05) contrast(1.1) saturate(1.1);
+    }
+    .marquee-item::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 3;
+    }
+    .marquee-item:hover::after {
+      opacity: 1;
+      animation: shimmer 0.8s ease-out forwards;
+    }
+    @keyframes shimmer {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { transform: scale(1.2); opacity: 0; }
+    }
+    .gallery-cta {
+      margin-top: 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .marquee-wrapper:hover .marquee-track {
+      animation-play-state: paused;
+    }
+    @media (max-width: 768px) {
+      .marquee-item {
+        width: 150px;
+        height: 180px;
+      }
+      .marquee-track {
+        gap: 1rem;
+      }
+      .marquee-wrapper {
+        gap: 1.2rem;
+      }
+    }
+
+    /* MINT CARD */
+    .mint-section { background: var(--bg-deep); }
+    .mint-container { max-width: 650px; margin: 0 auto; }
+    .mint-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+    .mint-phases {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .mint-phase-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.2rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid transparent;
+    }
+    .mint-phase-row.active {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.05);
+    }
+    .phase-name { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); }
+    .phase-detail { font-size: 0.8rem; color: var(--text-dim); }
+    .phase-status {
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+    }
+    .phase-status.live { color: #22c55e; text-shadow: 0 0 8px #22c55e80; }
+    .phase-status.upcoming { color: var(--gold); }
+    .phase-status.completed { color: var(--text-muted); }
+
+    .countdown-timer {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold);
+      margin: 1.5rem 0;
+      letter-spacing: 3px;
+    }
+    .btn-mint {
+      width: 100%;
+      padding: 1.1rem;
+      justify-content: center;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+      transition: all 0.3s ease;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .btn-mint.active-mint {
+      cursor: pointer;
+      opacity: 1;
+      background: linear-gradient(135deg, #D4AF37, #B49428);
+      box-shadow: 0 0 15px var(--gold-glow), 0 8px 20px rgba(0,0,0,0.3);
+      animation: mintGlowPulse 1.5s infinite ease-in-out;
+    }
+    .btn-mint.active-mint:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px var(--gold), 0 12px 30px rgba(212,175,55,0.5);
+    }
+    @keyframes mintGlowPulse {
+      0% { box-shadow: 0 0 0 0 var(--gold-glow); }
+      50% { box-shadow: 0 0 0 12px rgba(212,175,55,0.3); }
+      100% { box-shadow: 0 0 0 0 var(--gold-glow); }
+    }
+    .mint-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* ROADMAP */
+    .roadmap-timeline {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .roadmap-timeline::before {
+      content: '';
+      position: absolute;
+      left: 28px; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), var(--border-subtle), transparent);
+    }
+    .roadmap-item {
+      position: relative;
+      padding-left: 72px;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+    .roadmap-item.visible { opacity: 1; transform: translateY(0); }
+    .roadmap-dot {
+      position: absolute;
+      left: 17px; top: 4px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--bg-primary);
+      border: 2px solid var(--gold);
+      z-index: 2;
+    }
+    .roadmap-item.active .roadmap-dot { background: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
+    .roadmap-phase {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .roadmap-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .roadmap-card h4 { margin-bottom: 0.5rem; }
+    .roadmap-card li { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.3rem; list-style: none; }
+    .roadmap-card li::before { content: '▸ '; color: var(--gold); }
+
+    /* FAQ */
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.8rem;
+      background: rgba(255,255,255,0.01);
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      text-align: left;
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; }
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.2rem;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    /* COMMUNITY */
+    .community-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .community-card {
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-subtle);
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: block;
+    }
+    .community-card:hover {
+      border-color: var(--gold);
+      background: rgba(212,175,55,0.04);
+      transform: translateY(-6px);
+    }
+    .community-card .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .community-card h4 { color: var(--text-primary); margin-bottom: 0.5rem; }
+    .community-card p { color: var(--text-dim); font-size: 0.8rem; }
+
+    .footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+      background: var(--bg-primary);
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .footer-logo { font-family: var(--font-display); color: var(--gold); }
+    .footer-links a { color: var(--text-muted); text-decoration: none; margin-right: 1.5rem; font-size: 0.8rem; }
+    .footer-links a:hover { color: var(--gold); }
+
+    @media (max-width: 1024px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; }
+      .hero-subtitle { margin: 0 auto 2rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-visual { min-height: 350px; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .hero-title { font-size: 2.2rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .community-cards { grid-template-columns: 1fr; }
+      .footer-content { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo">BUDDIES</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#mint">Mint</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-socials">
+      <a href="https://x.com/bbuddiesclub?s=21" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.374 0 12s5.374 12 12 12 12-5.374 12-12S18.626 0 12 0ZM5.92 12.403l.051-.081 3.123-4.884a.107.107 0 0 1 .187.014c.52 1.169.972 2.623.76 3.528-.088.372-.328.876-.614 1.342a2.405 2.405 0 0 1-.117.199.106.106 0 0 1-.09.045H6.013a.106.106 0 0 1-.093-.163Zm13.914 1.68a.109.109 0 0 1-.065.101c-.243.103-1.07.485-1.414.962-.878 1.222-1.548 2.97-3.048 2.97H9.053a4.019 4.019 0 0 1-4.013-4.028v-.072c0-.058.048-.106.108-.106h3.485c.07 0 .12.063.115.132-.026.226.017.459.125.67.206.42.636.682 1.099.682h1.726v-1.347H9.99a.11.11 0 0 1-.089-.173l.063-.09c.16-.231.391-.586.621-.992.156-.274.308-.568.43-.861.024-.052.043-.107.065-.16.033-.094.067-.182.091-.269a4.57 4.57 0 0 0 .065-.223c.057-.25.081-.514.081-.787 0-.108-.004-.221-.014-.329-.005-.117-.02-.238-.034-.363a3.037 3.037 0 0 0-.048-.283 6.031 6.031 0 0 0-.098-.468l-.014-.06c-.029-.108-.053-.209-.082-.317a11.358 11.358 0 0 0-.328-1.028c-.043-.127-.091-.243-.135-.358a5.413 5.413 0 0 0-.16-.39c-.048-.111-.096-.206-.14-.298-.029-.058-.058-.11-.082-.16l-.228-.413a.074.074 0 0 1 .084-.105l1.32.357h.006l.005.002.174.048.192.053.07.019v-.783c0-.379.302-.686.679-.686.188 0 .357.077.48.202a.689.689 0 0 1 .2.484v1.164l.142.039a.104.104 0 0 1 .029.014c.036.027.086.07.15.122.05.042.105.092.17.148.13.112.286.26.46.432.048.046.091.091.139.142.18.19.38.406.567.646.053.067.101.139.154.209.048.072.101.142.144.214.058.094.122.19.173.291.024.053.053.105.072.163.067.145.12.295.16.437a.547.547 0 0 1 .024.134v.01c.014.067.019.139.024.214.019.178.005.357-.034.525-.014.077-.034.15-.058.228-.024.072-.053.149-.086.223a3.108 3.108 0 0 1-.252.461c-.034.058-.072.122-.115.178-.043.062-.091.122-.134.182-.058.077-.122.154-.182.226a2.85 2.85 0 0 1-.192.226c-.082.098-.168.192-.259.283a3.35 3.35 0 0 1-.192.202c-.067.072-.139.139-.206.202a6.045 6.045 0 0 1-.17.154l-.11.1a.114.114 0 0 1-.072.026h-1.051v1.347h1.322c.295 0 .572-.103.8-.296.077-.067.415-.36.816-.802a.094.094 0 0 1 .05-.033l3.65-1.056a.108.108 0 0 1 .138.103v.018Z"/></svg></a>
+      <a href="https://x.com/bbuddiesclub?s=21" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+    <button class="mobile-toggle" id="mobile-toggle">☰</button>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu"><a href="#about">About</a><a href="#gallery">Gallery</a><a href="#mint">Mint</a><a href="#roadmap">Roadmap</a><a href="#faq">FAQ</a></div>
+
+  <section class="hero"><div class="hero-container"><div class="hero-content"><div class="hero-badge"><span class="dot"></span>Elite Access</div><h1 class="hero-title">BILLIONAIRE<br>BUDDIES</h1><p class="hero-subtitle">6,666 hyper-realistic PFP characters on Ethereum. Secure your digital legacy.</p><div class="hero-buttons"><a href="https://opensea.io/collection/billionaire-buddies" target="_blank" class="btn btn-primary">Explore Collection ↗</a><a href="#mint" class="btn btn-outline">Mint Info</a></div></div><div class="hero-visual"><div class="hero-card-stack"><div class="hero-card"><img src="images/hero-1.png" alt="buddy"></div><div class="hero-card"><img src="images/hero-2.png" alt="buddy"></div><div class="hero-card"><img src="images/hero-3.png" alt="buddy"></div></div></div></div></section>
+
+  <section class="stats-section"><div class="stats-grid"><div class="stat-item"><div class="stat-value" data-target="6666">6666</div><div class="stat-label">Total Supply</div></div><div class="stat-item"><div class="stat-value" data-target="0">0</div><div class="stat-label">Minted</div></div><div class="stat-item"><div class="stat-value">0.001 ETH</div><div class="stat-label">Public Price</div></div><div class="stat-item"><div class="stat-value" data-target="0">0</div><div class="stat-label">Holders</div></div></div></section>
+
+  <section class="section" id="about"><div class="section-container"><div class="section-header"><span class="section-tag">// The Collection</span><h2 class="section-title">What are the BUDDIES?</h2></div><div class="about-grid"><div class="about-image-wrapper"><img src="images/preview.png" alt="preview"></div><div><h3 style="color:var(--gold);font-family:var(--font-display);margin-bottom:1rem">High‑fidelity PFPs for the ambitious.</h3><p style="color:var(--text-dim)">Billionaire Buddies merges premium 2D character art with modern entrepreneurship. Each Buddy is a badge of entry into an elite circle of digital innovators.</p></div></div></div></section>
+
+  <!-- ========== GALLERY - 15 NFT FULLY ANIMATED ========== -->
+  <section class="gallery-section" id="gallery">
+    <div class="section-header">
+      <span class="section-tag">// Gallery</span>
+      <h2 class="section-title">Meet the Buddies</h2>
+    </div>
+    <div class="marquee-wrapper">
+      <div class="marquee-track top">
+        <div class="marquee-item"><img src="images/nft-1.png" alt="NFT 1"></div>
+        <div class="marquee-item"><img src="images/nft-2.png" alt="NFT 2"></div>
+        <div class="marquee-item"><img src="images/nft-3.png" alt="NFT 3"></div>
+        <div class="marquee-item"><img src="images/nft-4.png" alt="NFT 4"></div>
+        <div class="marquee-item"><img src="images/nft-5.png" alt="NFT 5"></div>
+        <div class="marquee-item"><img src="images/nft-6.png" alt="NFT 6"></div>
+        <div class="marquee-item"><img src="images/nft-7.png" alt="NFT 7"></div>
+        <div class="marquee-item"><img src="images/nft-8.png" alt="NFT 8"></div>
+        <div class="marquee-item"><img src="images/nft-9.png" alt="NFT 9"></div>
+        <div class="marquee-item"><img src="images/nft-10.png" alt="NFT 10"></div>
+        <div class="marquee-item"><img src="images/nft-11.png" alt="NFT 11"></div>
+        <div class="marquee-item"><img src="images/nft-12.png" alt="NFT 12"></div>
+        <div class="marquee-item"><img src="images/nft-13.png" alt="NFT 13"></div>
+        <div class="marquee-item"><img src="images/nft-14.png" alt="NFT 14"></div>
+        <div class="marquee-item"><img src="images/nft-15.png" alt="NFT 15"></div>
+        <!-- klonlar (kesintisiz döngü) -->
+        <div class="marquee-item"><img src="images/nft-1.png" alt="NFT 1"></div>
+        <div class="marquee-item"><img src="images/nft-2.png" alt="NFT 2"></div>
+        <div class="marquee-item"><img src="images/nft-3.png" alt="NFT 3"></div>
+        <div class="marquee-item"><img src="images/nft-4.png" alt="NFT 4"></div>
+        <div class="marquee-item"><img src="images/nft-5.png" alt="NFT 5"></div>
+        <div class="marquee-item"><img src="images/nft-6.png" alt="NFT 6"></div>
+        <div class="marquee-item"><img src="images/nft-7.png" alt="NFT 7"></div>
+        <div class="marquee-item"><img src="images/nft-8.png" alt="NFT 8"></div>
+        <div class="marquee-item"><img src="images/nft-9.png" alt="NFT 9"></div>
+        <div class="marquee-item"><img src="images/nft-10.png" alt="NFT 10"></div>
+        <div class="marquee-item"><img src="images/nft-11.png" alt="NFT 11"></div>
+        <div class="marquee-item"><img src="images/nft-12.png" alt="NFT 12"></div>
+        <div class="marquee-item"><img src="images/nft-13.png" alt="NFT 13"></div>
+        <div class="marquee-item"><img src="images/nft-14.png" alt="NFT 14"></div>
+        <div class="marquee-item"><img src="images/nft-15.png" alt="NFT 15"></div>
+      </div>
+      <div class="marquee-track bottom">
+        <div class="marquee-item"><img src="images/nft-15.png" alt="NFT 15"></div>
+        <div class="marquee-item"><img src="images/nft-14.png" alt="NFT 14"></div>
+        <div class="marquee-item"><img src="images/nft-13.png" alt="NFT 13"></div>
+        <div class="marquee-item"><img src="images/nft-12.png" alt="NFT 12"></div>
+        <div class="marquee-item"><img src="images/nft-11.png" alt="NFT 11"></div>
+        <div class="marquee-item"><img src="images/nft-10.png" alt="NFT 10"></div>
+        <div class="marquee-item"><img src="images/nft-9.png" alt="NFT 9"></div>
+        <div class="marquee-item"><img src="images/nft-8.png" alt="NFT 8"></div>
+        <div class="marquee-item"><img src="images/nft-7.png" alt="NFT 7"></div>
+        <div class="marquee-item"><img src="images/nft-6.png" alt="NFT 6"></div>
+        <div class="marquee-item"><img src="images/nft-5.png" alt="NFT 5"></div>
+        <div class="marquee-item"><img src="images/nft-4.png" alt="NFT 4"></div>
+        <div class="marquee-item"><img src="images/nft-3.png" alt="NFT 3"></div>
+        <div class="marquee-item"><img src="images/nft-2.png" alt="NFT 2"></div>
+        <div class="marquee-item"><img src="images/nft-1.png" alt="NFT 1"></div>
+        <!-- klonlar -->
+        <div class="marquee-item"><img src="images/nft-15.png" alt="NFT 15"></div>
+        <div class="marquee-item"><img src="images/nft-14.png" alt="NFT 14"></div>
+        <div class="marquee-item"><img src="images/nft-13.png" alt="NFT 13"></div>
+        <div class="marquee-item"><img src="images/nft-12.png" alt="NFT 12"></div>
+        <div class="marquee-item"><img src="images/nft-11.png" alt="NFT 11"></div>
+        <div class="marquee-item"><img src="images/nft-10.png" alt="NFT 10"></div>
+        <div class="marquee-item"><img src="images/nft-9.png" alt="NFT 9"></div>
+        <div class="marquee-item"><img src="images/nft-8.png" alt="NFT 8"></div>
+        <div class="marquee-item"><img src="images/nft-7.png" alt="NFT 7"></div>
+        <div class="marquee-item"><img src="images/nft-6.png" alt="NFT 6"></div>
+        <div class="marquee-item"><img src="images/nft-5.png" alt="NFT 5"></div>
+        <div class="marquee-item"><img src="images/nft-4.png" alt="NFT 4"></div>
+        <div class="marquee-item"><img src="images/nft-3.png" alt="NFT 3"></div>
+        <div class="marquee-item"><img src="images/nft-2.png" alt="NFT 2"></div>
+        <div class="marquee-item"><img src="images/nft-1.png" alt="NFT 1"></div>
+      </div>
+    </div>
+    <div class="gallery-cta">
+      <a href="https://opensea.io/collection/billionaire-buddies" target="_blank" class="btn btn-outline">Full Collection on OpenSea ↗</a>
+    </div>
+  </section>
+
+  <section class="section mint-section" id="mint"><div class="section-container"><div class="section-header"><span class="section-tag">// Mint</span><h2 class="section-title">Claim Your Buddy</h2></div><div class="mint-container"><div class="mint-card"><div class="mint-phases" id="mintPhasesContainer"><div class="mint-phase-row" data-phase="team"><span class="phase-name">🔒 TEAM</span><span class="phase-detail">Free · 333 NFTs</span><span class="phase-status" id="status-team">--:--</span></div><div class="mint-phase-row" data-phase="wl-gtd"><span class="phase-name">⭐ WL GTD</span><span class="phase-detail">Free · 5 per wallet</span><span class="phase-status" id="status-wlgtd">--:--</span></div><div class="mint-phase-row" data-phase="wl-fcfs"><span class="phase-name">🎟️ WL FCFS</span><span class="phase-detail">Free · 5 per wallet</span><span class="phase-status" id="status-wlfcfs">--:--</span></div><div class="mint-phase-row" data-phase="public"><span class="phase-name">🌐 PUBLIC</span><span class="phase-detail">0.001 ETH · Unlimited</span><span class="phase-status" id="status-public">--:--</span></div></div><div class="countdown-timer" id="countdownTimer">--:--:--</div><button class="btn btn-primary btn-mint" id="mintButton" disabled>⏳ Mint opens soon</button><div class="mint-note">✨ Mint directly on OpenSea when public sale starts</div></div></div></div></section>
+
+  <section class="section" id="roadmap"><div class="section-container"><div class="section-header"><span class="section-tag">// Roadmap</span><h2 class="section-title">The Vision</h2></div><div class="roadmap-timeline"><div class="roadmap-item active"><div class="roadmap-dot"></div><div class="roadmap-phase">Phase 1</div><div class="roadmap-card"><h4>🚀 Launch</h4><ul><li>Smart contract (Ethereum)</li><li>Tiered mint event</li><li>Community channels</li></ul></div></div><div class="roadmap-item"><div class="roadmap-dot"></div><div class="roadmap-phase">Phase 2</div><div class="roadmap-card"><h4>👥 Community</h4><ul><li>Holder verification</li><li>Exclusive events</li><li>Rarity reveal</li></ul></div></div><div class="roadmap-item"><div class="roadmap-dot"></div><div class="roadmap-phase">Phase 3</div><div class="roadmap-card"><h4>🌍 Expansion</h4><ul><li>Merch drop</li><li>Partnerships</li><li>Treasury & voting</li></ul></div></div></div></div></section>
+
+  <section class="section" id="faq"><div class="section-container"><div class="section-header"><span class="section-tag">// FAQ</span><h2 class="section-title">Questions</h2></div><div class="faq-list"><div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">What is Billionaire Buddies? <span>▾</span></button><div class="faq-answer"><div class="faq-answer-inner">A 6,666 PFP collection on Ethereum merging premium 2D art with Web3 ambition.</div></div></div><div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">How does the mint work? <span>▾</span></button><div class="faq-answer"><div class="faq-answer-inner">Four phases: TEAM (free), WL GTD (free), WL FCFS (free), PUBLIC (0.001 ETH). Mint button activates when public phase begins.</div></div></div><div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Where can I mint? <span>▾</span></button><div class="faq-answer"><div class="faq-answer-inner">Public mint redirects to OpenSea collection page when sale goes live.</div></div></div></div></div></section>
+
+  <footer class="footer"><div class="footer-content"><div class="footer-logo">BILLIONAIRE BUDDIES</div><div class="footer-links"><a href="https://opensea.io/collection/billionaire-buddies" target="_blank">OpenSea</a><a href="https://x.com/bbuddiesclub?s=21" target="_blank">Twitter</a><a href="#">Discord</a></div><div style="color:var(--text-muted);font-size:0.75rem;">© 2025 BBuddiesClub</div></div></footer>
+
+  <script>
+    // Particles effect (gold dust)
+    (function(){
+      const canvas=document.getElementById('particles-canvas'),ctx=canvas.getContext('2d');
+      let particles=[];
+      function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+      function create(){return{x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2+0.5,speedX:(Math.random()-0.5)*0.2,speedY:(Math.random()-0.5)*0.2,opacity:Math.random()*0.4+0.1};}
+      function init(){resize();particles=Array.from({length:55},create);}
+      function animate(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{p.x+=p.speedX;p.y+=p.speedY;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.fillStyle='#D4AF37';ctx.globalAlpha=p.opacity;ctx.fillRect(Math.round(p.x),Math.round(p.y),p.size,p.size);});
+        requestAnimationFrame(animate);
+      }
+      window.addEventListener('resize',resize);init();animate();
+    })();
+
+    // Navbar scroll / mobile
+    window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50));
+    document.getElementById('mobile-toggle').addEventListener('click',()=>document.getElementById('mobile-menu').classList.toggle('open'));
+    window.closeMobileMenu=()=>document.getElementById('mobile-menu')?.classList.remove('open');
+    document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mobile-menu').classList.remove('open')));
+
+    // Scroll reveal
+    const observer=new IntersectionObserver((entries)=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.15});
+    document.querySelectorAll('.reveal,.roadmap-item').forEach(el=>observer.observe(el));
+    document.querySelectorAll('.roadmap-item').forEach(el=>observer.observe(el));
+
+    // FAQ Toggle
+    window.toggleFaq=function(btn){
+      const item=btn.closest('.faq-item');
+      item.classList.toggle('open');
+    };
+
+    // ---------- MINT SCHEDULE LOGIC (NO WALLET, ONLY TIMER + OPENSEA REDIRECT) ----------
+    const OPENSEA_COLLECTION_URL = "https://opensea.io/collection/billionaire-buddies";
+
+    function getMintBaseDate() {
+      const now = new Date();
+      const base = new Date(now);
+      base.setHours(0,0,0,0);
+      const todayPublicTime = new Date(base);
+      todayPublicTime.setHours(22,0,0,0);
+      if (now >= todayPublicTime) {
+        base.setDate(base.getDate() + 1);
+      }
+      return base;
+    }
+
+    function getPhaseTimes() {
+      const base = getMintBaseDate();
+      const teamTime = new Date(base); teamTime.setHours(19,0,0,0);
+      const wlGtdTime = new Date(base); wlGtdTime.setHours(20,0,0,0);
+      const wlFcfsTime = new Date(base); wlFcfsTime.setHours(21,0,0,0);
+      const publicTime = new Date(base); publicTime.setHours(22,0,0,0);
+      return { teamTime, wlGtdTime, wlFcfsTime, publicTime };
+    }
+
+    function updatePhaseStatuses() {
+      const now = new Date();
+      const { teamTime, wlGtdTime, wlFcfsTime, publicTime } = getPhaseTimes();
+      const phases = [
+        { id: 'status-team', time: teamTime, ele: document.getElementById('status-team') },
+        { id: 'status-wlgtd', time: wlGtdTime, ele: document.getElementById('status-wlgtd') },
+        { id: 'status-wlfcfs', time: wlFcfsTime, ele: document.getElementById('status-wlfcfs') },
+        { id: 'status-public', time: publicTime, ele: document.getElementById('status-public') }
+      ];
+      phases.forEach(phase => {
+        if (!phase.ele) return;
+        if (now >= phase.time) {
+          phase.ele.textContent = 'LIVE';
+          phase.ele.classList.add('live');
+          phase.ele.classList.remove('upcoming','completed');
+        } else {
+          phase.ele.textContent = formatPhaseTime(phase.time);
+          phase.ele.classList.add('upcoming');
+          phase.ele.classList.remove('live','completed');
+        }
+      });
+      const rows = document.querySelectorAll('.mint-phase-row');
+      rows.forEach(row=>row.classList.remove('active'));
+      if (now >= publicTime) document.querySelector('.mint-phase-row[data-phase="public"]')?.classList.add('active');
+      else if (now >= wlFcfsTime) document.querySelector('.mint-phase-row[data-phase="wl-fcfs"]')?.classList.add('active');
+      else if (now >= wlGtdTime) document.querySelector('.mint-phase-row[data-phase="wl-gtd"]')?.classList.add('active');
+      else if (now >= teamTime) document.querySelector('.mint-phase-row[data-phase="team"]')?.classList.add('active');
+    }
+
+    function formatPhaseTime(date) {
+      return `${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+    }
+
+    function getPublicMintStart() {
+      return getPhaseTimes().publicTime;
+    }
+
+    function updateMintButtonAndCountdown() {
+      const now = new Date();
+      const publicStart = getPublicMintStart();
+      const diff = publicStart - now;
+      const mintBtn = document.getElementById('mintButton');
+      const countdownEl = document.getElementById('countdownTimer');
+      if (diff <= 0) {
+        if (countdownEl) countdownEl.textContent = '🔓 MINT LIVE';
+        mintBtn.disabled = false;
+        mintBtn.textContent = '✨ MINT NOW ON OPENSEA ✨';
+        mintBtn.classList.add('active-mint');
+        return true;
+      } else {
+        mintBtn.disabled = true;
+        mintBtn.classList.remove('active-mint');
+        mintBtn.textContent = '⏳ Mint opens when countdown ends';
+        const hours = Math.floor(diff / 3600000);
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        countdownEl.textContent = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        return false;
+      }
+    }
+
+    const mintButton = document.getElementById('mintButton');
+    if (mintButton) {
+      mintButton.addEventListener('click', (e) => {
+        if (!mintButton.disabled) {
+          window.open(OPENSEA_COLLECTION_URL, '_blank');
+        }
+      });
+    }
+
+    function tickAll() {
+      updatePhaseStatuses();
+      updateMintButtonAndCountdown();
+    }
+    tickAll();
+    setInterval(tickAll, 1000);
+
+    // Stat counters
+    const statValues = document.querySelectorAll('.stat-value[data-target]');
+    statValues.forEach(el => {
+      const target = parseInt(el.getAttribute('data-target'), 10);
+      if (!isNaN(target) && target > 0 && el.innerText !== target.toString()) {
+        let current = 0;
+        const step = Math.ceil(target / 50);
+        const updater = setInterval(() => {
+          current += step;
+          if (current >= target) { el.innerText = target; clearInterval(updater); }
+          else el.innerText = current;
+        }, 25);
+      }
+    });
+  </script>
+</body>
+</html>
